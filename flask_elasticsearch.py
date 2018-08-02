@@ -45,10 +45,9 @@ class Elasticsearch(object):
     Your application's configuration will need the following parameters:
         * ``ELASTICSEARCH_CONNECTION``: a comma-separated list of URLs,
                                         defaults to `http://127.0.0.1:9200`.
-        * ``ELASTICSEARCH_USERNAME``: the username to connect with, if any;
-                                      defaults to `''`.
-        * ``ELASTICSEARCH_PASSWORD``: the password to use, if any;
-                                      defaults to `''`.
+        * ``ELASTICSEARCH_HTTP_AUTH``: A username/password combo, either in a
+                                       tuple or separted in a string by ':'.
+                                       Defaults to `None` (for no auth).
         * ``ELASTICSEARCH_USE_SSL``: whether to use SSL for the connection,
                                      defaults to `False`.
         * ``ELASTICSEARCH_USE_SNIFFING``: whether to use sniffing for the
@@ -76,8 +75,7 @@ class Elasticsearch(object):
     def connect(self):
         return Es(
             current_app.config['ELASTICSEARCH_CONNECTION'].split(','),
-            http_auth=(current_app.config['ELASTICSEARCH_USERNAME'],
-                       current_app.config['ELASTICSEARCH_PASSWORD']),
+            http_auth=current_app.config['ELASTICSEARCH_HTTP_AUTH'],
             use_ssl=current_app.config['ELASTICSEARCH_USE_SSL'],
             sniff_on_start=current_app.config['ELASTICSEARCH_USE_SNIFFING'],
             sniff_on_connection_fail=\
