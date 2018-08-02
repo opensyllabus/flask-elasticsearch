@@ -1,7 +1,7 @@
 import unittest
 
 from flask import Flask
-from flask.ext.elasticsearch import Elasticsearch
+from flask_elasticsearch import Elasticsearch
 
 
 class FlaskElasticsearchTestCase(unittest.TestCase):
