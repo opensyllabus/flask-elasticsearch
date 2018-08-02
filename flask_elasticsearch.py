@@ -51,6 +51,8 @@ class Elasticsearch(object):
                                       defaults to `''`.
         * ``ELASTICSEARCH_USE_SSL``: whether to use SSL for the connection,
                                      defaults to `False`.
+        * ``ELASTICSEARCH_USE_SNIFFING``: whether to use sniffing for the
+                                          connection, defaults to `True`.
     """
     def __init__(self, app=None):
         self.app = app
@@ -63,6 +65,7 @@ class Elasticsearch(object):
         app.config.setdefault('ELASTICSEARCH_USERNAME', '')
         app.config.setdefault('ELASTICSEARCH_PASSWORD', '')
         app.config.setdefault('ELASTICSEARCH_USE_SSL', False)
+        app.config.setdefault('ELASTICSEARCH_USE_SNIFFING', True)
         # Use the new style teardown_appcontext if it's available,
         # otherwise fall back to the request context.
         if hasattr(app, 'teardown_appcontext'):
@@ -76,8 +79,9 @@ class Elasticsearch(object):
             http_auth=(current_app.config['ELASTICSEARCH_USERNAME'],
                        current_app.config['ELASTICSEARCH_PASSWORD']),
             use_ssl=current_app.config['ELASTICSEARCH_USE_SSL'],
-            sniff_on_start=True,
-            sniff_on_connection_fail=True
+            sniff_on_start=current_app.config['ELASTICSEARCH_USE_SNIFFING'],
+            sniff_on_connection_fail=\
+                    current_app.config['ELASTICSEARCH_USE_SNIFFING']
         )
 
     def teardown(self, exception):

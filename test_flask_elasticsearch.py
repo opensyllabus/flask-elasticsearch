@@ -22,6 +22,7 @@ class FlaskElasticsearchTestCase(unittest.TestCase):
         self.assertEqual(app.config['ELASTICSEARCH_USERNAME'], '')
         self.assertEqual(app.config['ELASTICSEARCH_PASSWORD'], '')
         self.assertFalse(app.config['ELASTICSEARCH_USE_SSL'])
+        self.assertTrue(app.config['ELASTICSEARCH_USE_SNIFFING'])
 
     def test_configuration_overrides_defaults(self):
         host_str = 'http://srv1.example.com:9200,http://srv2.example.com:9200'
@@ -35,3 +36,4 @@ class FlaskElasticsearchTestCase(unittest.TestCase):
         self.assertEqual(app.config['ELASTICSEARCH_USERNAME'], username)
         self.assertEqual(app.config['ELASTICSEARCH_PASSWORD'], password)
         self.assertTrue(app.config['ELASTICSEARCH_USE_SSL'])
+        self.assertFalse(app.config['ELASTICSEARCH_USE_SNIFFING'])
